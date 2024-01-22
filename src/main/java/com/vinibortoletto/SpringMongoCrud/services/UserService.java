@@ -52,4 +52,14 @@ public class UserService {
 
         return userRepository.save(updatedUser);
     }
+
+    public void delete(String id) {
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty()) {
+            throw new NotFoundException("User not found");
+        }
+
+        userRepository.delete(user.get());
+    }
 }

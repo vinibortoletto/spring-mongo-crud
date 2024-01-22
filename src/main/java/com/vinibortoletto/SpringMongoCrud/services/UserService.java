@@ -39,4 +39,17 @@ public class UserService {
 
         return userRepository.save(newUser);
     }
+
+    public User update(String id, UserRequestDTO dto) {
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty()) {
+            throw new NotFoundException("User not found");
+        }
+
+        User updatedUser = user.get();
+        BeanUtils.copyProperties(dto, updatedUser);
+
+        return userRepository.save(updatedUser);
+    }
 }

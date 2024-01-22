@@ -1,6 +1,7 @@
 package com.vinibortoletto.SpringMongoCrud.controllers;
 
 
+import com.vinibortoletto.SpringMongoCrud.dtos.UserResponseDTO;
 import com.vinibortoletto.SpringMongoCrud.models.User;
 import com.vinibortoletto.SpringMongoCrud.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,9 @@ public class UserController {
     private UserService userService;
 
     @GetMapping()
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<UserResponseDTO>> findAll() {
         List<User> userList = userService.findAll();
-        return ResponseEntity.ok().body(userList);
+        List<UserResponseDTO> response = UserResponseDTO.convert(userList);
+        return ResponseEntity.ok().body(response);
     }
 }

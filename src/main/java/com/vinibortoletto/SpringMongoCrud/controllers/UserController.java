@@ -1,15 +1,14 @@
 package com.vinibortoletto.SpringMongoCrud.controllers;
 
 
+import com.vinibortoletto.SpringMongoCrud.dtos.UserRequestDTO;
 import com.vinibortoletto.SpringMongoCrud.dtos.UserResponseDTO;
 import com.vinibortoletto.SpringMongoCrud.models.User;
 import com.vinibortoletto.SpringMongoCrud.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +30,12 @@ public class UserController {
         User user = userService.findById(id);
         UserResponseDTO response = new UserResponseDTO(user);
         return ResponseEntity.ok().body(response);
+    }
+
+    @PostMapping()
+    public ResponseEntity<UserResponseDTO> save(@RequestBody UserRequestDTO dto) {
+        User user = userService.save(dto);
+        UserResponseDTO response = new UserResponseDTO(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }
